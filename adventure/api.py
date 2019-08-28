@@ -65,4 +65,28 @@ def move(request):
 @api_view(["POST"])
 def say(request):
     # IMPLEMENT
+    player = request.user.player
+    player_id = player.id
+    player_uuid = player.uuid
+    data = json.loads(request.body)
+    message = data['message']
+    room = player.room()
+    players_in_room = room.playerUUIDs(player_id)
+    # for p_uuid in players_in_room:
+    #     pusher.trigger(f'p-channel-{p_uuid}', u'broadcast',
+    #                    {'message': f'{player.user.username} says {message}'})
+    return JsonResponse({'name': player.user.username, 'message': message}, safe=True)
+
     return JsonResponse({'error': "Not yet implemented"}, safe=True, status=500)
+
+
+@csrf_exempt
+@api_view(["GET"])
+def map(request):
+    rooms = Room.objects.all()
+    room_list = []
+    if len(rooms) > 0:
+        for room in rooms:
+            room_list.append(
+                {"title": room.title, "description": room.description})
+    return JsonResponse({'room_list': room_list}, safe=True, status=200)
