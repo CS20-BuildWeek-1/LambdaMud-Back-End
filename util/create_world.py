@@ -14,8 +14,15 @@ r_overlook = Room(title="Grand Overlook", description="""A steep cliff appears b
 into the darkness. Ahead to the north, a light flickers in
 the distance, but there is no way across the chasm.""")
 
+r_river = Room(title="Shaky Bridge", description="""The deep river flows from north 
+to east. The cold breeze chills the air.""")
+
+r_cliff = Room(title="Steep Mountains", description="""The high mountains  here from west
+to north. The smell of animals permeates the air.""")
+
 r_narrow = Room(title="Narrow Passage", description="""The narrow passage bends here from west
 to north. The smell of gold permeates the air.""")
+
 
 r_treasure = Room(title="Treasure Chamber", description="""You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
@@ -24,6 +31,8 @@ earlier adventurers. The only exit is to the south.""")
 r_outside.save()
 r_foyer.save()
 r_overlook.save()
+r_river.save()
+r_cliff.save()
 r_narrow.save()
 r_treasure.save()
 
@@ -35,6 +44,12 @@ r_foyer.connectRooms(r_overlook, "n")
 r_overlook.connectRooms(r_foyer, "s")
 
 r_foyer.connectRooms(r_narrow, "e")
+r_river.connectRooms(r_foyer, "w")
+
+r_river.connectRooms(r_cliff, "n")
+r_cliff.connectRooms(r_river, "s")
+
+r_cliff.connectRooms(r_overlook, "e")
 r_narrow.connectRooms(r_foyer, "w")
 
 r_narrow.connectRooms(r_treasure, "n")
