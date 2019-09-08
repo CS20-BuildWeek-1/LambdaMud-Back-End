@@ -17,8 +17,8 @@ the distance, but there is no way across the chasm.""")
 r_river = Room(title="Shaky Bridge", description="""The deep river flows from north 
 to east. The cold breeze chills the air.""")
 
-r_cliff = Room(title="Steep Mountains", description="""The high mountains  here from west
-to north. The smell of animals permeates the air.""")
+r_lava = Room(title="Lava Pit",
+              description="""You get stuck in a pit of molten lava, better find a way out fast.""")
 
 r_narrow = Room(title="Narrow Passage", description="""The narrow passage bends here from west
 to north. The smell of gold permeates the air.""")
@@ -32,7 +32,7 @@ r_outside.save()
 r_foyer.save()
 r_overlook.save()
 r_river.save()
-r_cliff.save()
+r_lava.save()
 r_narrow.save()
 r_treasure.save()
 
@@ -44,16 +44,17 @@ r_foyer.connectRooms(r_overlook, "n")
 r_overlook.connectRooms(r_foyer, "s")
 
 r_foyer.connectRooms(r_narrow, "e")
-r_river.connectRooms(r_foyer, "w")
-
-r_river.connectRooms(r_cliff, "n")
-r_cliff.connectRooms(r_river, "s")
-
-r_cliff.connectRooms(r_overlook, "e")
 r_narrow.connectRooms(r_foyer, "w")
 
 r_narrow.connectRooms(r_treasure, "n")
 r_treasure.connectRooms(r_narrow, "s")
+
+r_narrow.connectRooms(r_river, "e")
+r_river.connectRooms(r_narrow, "w")
+
+r_river.connectRooms(r_lava, "n")
+r_lava.connectRooms(r_river, "s")
+
 
 players = Player.objects.all()
 for p in players:
